@@ -55,6 +55,72 @@ class Map {
 
   getColoredMap() {
     // TODO: That's where you work
-    
+    let coloredMap = this.getRawMap().slice();
+    for (let i = 0; i < coloredMap.length; i++) {
+      for (let j = 0; j < coloredMap[i].length; j++) {
+        if(coloredMap[i][j] === DEFAULT_EARTH_COLOR)
+        { 
+          let tempColor=this.generateRandomColor()
+          if( i< coloredMap.length-1 && coloredMap[i+1][j] !== DEFAULT_EARTH_COLOR && coloredMap[i+1][j] !== DEFAULT_WATER_COLOR ){
+            tempColor=coloredMap[i+1][j]
+          }
+          else if(i>0 && coloredMap[i-1][j] !== DEFAULT_EARTH_COLOR && coloredMap[i-1][j] !== DEFAULT_WATER_COLOR ){
+            tempColor=coloredMap[i-1][j]
+          }
+          else if( j>0 && coloredMap[i][j-1] !== DEFAULT_EARTH_COLOR && coloredMap[i][j-1] !== DEFAULT_WATER_COLOR){
+            tempColor=coloredMap[i][j-1]
+          }
+          else if( j<coloredMap[i].length-1 && coloredMap[i][j+1] !== DEFAULT_EARTH_COLOR && coloredMap[i][j+1] !== DEFAULT_WATER_COLOR){
+            tempColor=coloredMap[i][j+1]
+          }
+          else{
+            tempColor=this.generateRandomColor()
+          }
+          coloredMap[i][j]=tempColor;
+
+        }
+      }
+    }
+
+    return coloredMap;
   }
 }
+
+
+
+// if (coloredMap[i][j] === DEFAULT_EARTH_COLOR ) {
+//   for (let k = j; k < coloredMap.length; k--) {
+//     if (coloredMap[i][k] === DEFAULT_EARTH_COLOR ) {
+//       coloredMap[i][k]=tempColor
+//     }
+//     else{
+//       break;
+//     }
+
+//   }
+//   for (let k = j; k > coloredMap.length; k++) {
+//     if (coloredMap[i][k] === DEFAULT_EARTH_COLOR ) {
+//       coloredMap[i][k]=tempColor
+//     }
+//     else{
+//       break;
+//     }
+//   }
+//   for (let k = i; k < coloredMap.length; k--) {
+//     if (coloredMap[i][k] === DEFAULT_EARTH_COLOR ) {
+//       coloredMap[i][k]=tempColor
+//     }
+//     else{
+//       break;
+//     }
+//   }
+//   for (let k = i; k > coloredMap.length; k++) {
+//     if (coloredMap[i][k] === DEFAULT_EARTH_COLOR ) {
+//       coloredMap[i][k]=tempColor
+//     }
+//     else{
+//       break;
+//     }
+//   }
+//   tempColor = this.generateRandomColor();
+// }
