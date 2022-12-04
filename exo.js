@@ -56,28 +56,36 @@ class Map {
   getColoredMap() {
     // TODO: That's where you work
     let coloredMap = this.getRawMap().slice();
-    for (let i = 0; i < coloredMap.length; i++) {
-      for (let j = 0; j < coloredMap[i].length; j++) {
-        if(coloredMap[i][j] === DEFAULT_EARTH_COLOR)
-        { 
-          let tempColor=this.generateRandomColor()
-          if( i< coloredMap.length-1 && coloredMap[i+1][j] !== DEFAULT_EARTH_COLOR && coloredMap[i+1][j] !== DEFAULT_WATER_COLOR ){
-            tempColor=coloredMap[i+1][j]
-          }
-          else if(i>0 && coloredMap[i-1][j] !== DEFAULT_EARTH_COLOR && coloredMap[i-1][j] !== DEFAULT_WATER_COLOR ){
-            tempColor=coloredMap[i-1][j]
-          }
-          else if( j>0 && coloredMap[i][j-1] !== DEFAULT_EARTH_COLOR && coloredMap[i][j-1] !== DEFAULT_WATER_COLOR){
-            tempColor=coloredMap[i][j-1]
-          }
-          else if( j<coloredMap[i].length-1 && coloredMap[i][j+1] !== DEFAULT_EARTH_COLOR && coloredMap[i][j+1] !== DEFAULT_WATER_COLOR){
-            tempColor=coloredMap[i][j+1]
-          }
-          else{
-            tempColor=this.generateRandomColor()
-          }
-          coloredMap[i][j]=tempColor;
+    let color =this.generateRandomColor()
+    const helper=(island, i, j, ROW, COL)=>{
+      if (i < 0 || j < 0 || i > (ROW - 1) || j > (COL - 1) || island[i][j] === DEFAULT_WATER_COLOR )
+      {
+          return;
+      }
+     
+      if (island[i][j] === DEFAULT_EARTH_COLOR)
+      {
+        island[i][j] =color
+      helper(island, i + 1, j, ROW, COL)   
+      helper(island, i - 1, j, ROW, COL)    
+      helper(island, i, j + 1, ROW, COL)    
+      helper(island, i, j - 1, ROW, COL)
+      }
+    }
 
+    let ROW = coloredMap.length;
+    let COL = coloredMap[0].length;
+
+    
+    for (let i = 0; i < ROW; i++) 
+    {
+      for (let j = 0; j < COL; j++) 
+      {
+        if (coloredMap[i][j] === DEFAULT_EARTH_COLOR)
+        {
+          
+          helper(coloredMap, i, j, ROW, COL)
+          color=this.generateRandomColor()
         }
       }
     }
@@ -86,41 +94,3 @@ class Map {
   }
 }
 
-
-
-// if (coloredMap[i][j] === DEFAULT_EARTH_COLOR ) {
-//   for (let k = j; k < coloredMap.length; k--) {
-//     if (coloredMap[i][k] === DEFAULT_EARTH_COLOR ) {
-//       coloredMap[i][k]=tempColor
-//     }
-//     else{
-//       break;
-//     }
-
-//   }
-//   for (let k = j; k > coloredMap.length; k++) {
-//     if (coloredMap[i][k] === DEFAULT_EARTH_COLOR ) {
-//       coloredMap[i][k]=tempColor
-//     }
-//     else{
-//       break;
-//     }
-//   }
-//   for (let k = i; k < coloredMap.length; k--) {
-//     if (coloredMap[i][k] === DEFAULT_EARTH_COLOR ) {
-//       coloredMap[i][k]=tempColor
-//     }
-//     else{
-//       break;
-//     }
-//   }
-//   for (let k = i; k > coloredMap.length; k++) {
-//     if (coloredMap[i][k] === DEFAULT_EARTH_COLOR ) {
-//       coloredMap[i][k]=tempColor
-//     }
-//     else{
-//       break;
-//     }
-//   }
-//   tempColor = this.generateRandomColor();
-// }
