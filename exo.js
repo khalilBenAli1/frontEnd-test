@@ -56,36 +56,35 @@ class Map {
   getColoredMap() {
     // TODO: That's where you work
     let coloredMap = this.getRawMap().slice();
-    let color =this.generateRandomColor()
-    const helper=(island, i, j, ROW, COL)=>{
-      if (i < 0 || j < 0 || i > (ROW - 1) || j > (COL - 1) || island[i][j] === DEFAULT_WATER_COLOR )
-      {
-          return;
+    let color = this.generateRandomColor();
+    const helper = (island, i, j, ROW, COL) => {
+      if (
+        i < 0 ||
+        j < 0 ||
+        i > ROW - 1 ||
+        j > COL - 1 ||
+        island[i][j] === DEFAULT_WATER_COLOR
+      ) {
+        return;
       }
-     
-      if (island[i][j] === DEFAULT_EARTH_COLOR)
-      {
-        island[i][j] =color
-      helper(island, i + 1, j, ROW, COL)   
-      helper(island, i - 1, j, ROW, COL)    
-      helper(island, i, j + 1, ROW, COL)    
-      helper(island, i, j - 1, ROW, COL)
+
+      if (island[i][j] === DEFAULT_EARTH_COLOR) {
+        island[i][j] = color;
+        helper(island, i + 1, j, ROW, COL);
+        helper(island, i - 1, j, ROW, COL);
+        helper(island, i, j + 1, ROW, COL);
+        helper(island, i, j - 1, ROW, COL);
       }
-    }
+    };
 
     let ROW = coloredMap.length;
     let COL = coloredMap[0].length;
-
     
-    for (let i = 0; i < ROW; i++) 
-    {
-      for (let j = 0; j < COL; j++) 
-      {
-        if (coloredMap[i][j] === DEFAULT_EARTH_COLOR)
-        {
-          
-          helper(coloredMap, i, j, ROW, COL)
-          color=this.generateRandomColor()
+    for (let i = 0; i < ROW; i++) {
+      for (let j = 0; j < COL; j++) {
+        if (coloredMap[i][j] === DEFAULT_EARTH_COLOR) {
+          helper(coloredMap, i, j, ROW, COL);
+          color = this.generateRandomColor();
         }
       }
     }
@@ -93,4 +92,3 @@ class Map {
     return coloredMap;
   }
 }
-
